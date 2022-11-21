@@ -1,0 +1,16 @@
+|INFO| Player position changed
+|INFO| Player position changed
+|INFO| Player position changed
+|INFO| Player took damage
+|INFO| Player position changed
+|INFO| Player position changed
+|STATE CHANGE| Clean
+|INFO| Player position changed
+|INFO| Med-kit has been picked up
+|INFO| Player health grew up
+|INFO| Player position changed
+|INFO| Player position changed
+|INFO| Player position changed
+|STATE CHANGE| Clean
+|INFO| Player position changed
+|INFO| Key has been picked up
