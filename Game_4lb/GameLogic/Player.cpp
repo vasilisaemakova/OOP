@@ -2,7 +2,8 @@
 #include "Player.h"
 #include <string>
 
-Player::Player(size_t health, size_t power, const std::string &nick) : healthLevel_(health), damage_(power), name_(nick){
+Player::Player(size_t health, size_t power, const std::string& nick)
+    : healthLevel_(health), damage_(power), name_(nick) {
     x_ = 0;
     y_ = 0;
     win_ = false;
@@ -11,11 +12,11 @@ Player::Player(size_t health, size_t power, const std::string &nick) : healthLev
 std::string Player::getNick() const {
     return name_;
 }
-void Player::setNick(const std::string &nick) {
+void Player::setNick(const std::string& nick) {
     name_ = nick;
 }
 
-Player::Player(){
+Player::Player() {
     healthLevel_ = 100;
     damage_ = 10;
     name_ = "player1";
@@ -28,13 +29,13 @@ size_t Player::getPosX() const {
     return x_;
 }
 void Player::setPosX(size_t x) {
-    x = x;
+    x_ = x;
 }
 size_t Player::getPosY() const {
     return y_;
 }
 void Player::setPosY(size_t y) {
-    y = y;
+    y_ = y;
 }
 void Player::setPos(size_t x, size_t y) {
     this->x_ = x;
@@ -64,11 +65,11 @@ void Player::setKey(bool key_) {
     this->key_ = key_;
 }
 
-void Player::setWin(){
+void Player::setWin() {
     win_ = true;
 }
 
-bool Player::getWin() const{
+bool Player::getWin() const {
     return win_;
 }
 

@@ -1,8 +1,8 @@
 #include "MedicalEvent.h"
 
-ReturnEvent MedicalEvent::make(Player *player) {
+ReturnEvent MedicalEvent::make(Player* player) {
     int a = player->getHealth();
-    a+=value;
+    a += value;
     player->setHealth(a);
     return health;
 }

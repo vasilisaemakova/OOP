@@ -6,8 +6,7 @@ Controller::Controller(Field *field, Player *player, Observable* observable) {
     this->player_ = player;
     this->playerView_ = new PlayerView(player);
     this->observable_ = observable;
-    player->setPos(0, 0);
-    field->updateOnCell(true, 0, 0);
+    field->updateOnCell(true, player->getPosX(), player->getPosY());
 }
 //нажал на w вызывается метод makeMove(-1,0)
 bool Controller::move(int x_, int y_){

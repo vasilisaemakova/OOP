@@ -7,5 +7,14 @@ class TrapEvent: public EventPlayer {
 public:
     ReturnEvent make(Player *player) override;
 
-    TrapEvent(int value);
+    explicit TrapEvent(int value);
+
+    Event* GetCopy() override {
+        Event* result = new TrapEvent(*this);
+        return result;
+    };
+
+    EventType GetType() override {
+        return EventType::kTrapEvent;
+    }
 };

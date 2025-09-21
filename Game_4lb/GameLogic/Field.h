@@ -6,7 +6,10 @@
 class Field {
 public:
 
-    Field() = default;
+    Field() {
+        cells = new Cell*[1];
+        cells[0] = new Cell[1];
+    }
 
     Field(size_t width, size_t height);
 

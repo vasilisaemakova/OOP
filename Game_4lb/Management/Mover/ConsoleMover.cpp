@@ -3,10 +3,12 @@
 
 #include <iostream>
 #include <fstream>
+#include <set>
 
 void ConsoleMover::loadCustomSettings(const std::string& settings_path) {
     std::ifstream input(settings_path);
-    up_ = down_ = left_ = right_ = "";
+    std::set<std::string> settings_names;
+    settings_.clear();
     for (int i = 0; i < 4; i++) {
         std::string setting;
         std::string value;
@@ -17,40 +19,38 @@ void ConsoleMover::loadCustomSettings(const std::string& settings_path) {
             throw WrongSettingsException("Not enough values");
         }
         input >> value;
-        if (setting == "up") {
-            up_ = value;
-        } else if (setting == "down") {
-            down_ = value;
-        } else if (setting == "left") {
-            left_ = value;
-        } else if (setting == "right") {
-            right_ = value;
-        } else {
-            input.close();
-            throw WrongSettingsException("Wrong setting argument: [" + setting + "]");
+        try {
+            settings_.at(value);
+            throw WrongSettingsException("This key is already taken");
+        } catch (const std::out_of_range& exception) {
+            if (settings_names.find(setting) != settings_names.end()) {
+                throw WrongSettingsException("This setting name is already taken");
+            }
+            settings_[value] = CreateMoverResponseFromString(setting);
         }
     }
     input.close();
-    if (up_.empty() || down_.empty() || left_.empty() || right_.empty()) {
-        throw WrongSettingsException("There's missing of an argument");
-    }
 };
 
-Direction ConsoleMover::move() {
+MoverResponse ConsoleMover::move() {
     std::string where;
     std::cin >> where;
 
-    if (where == up_) {
-        return Direction::UP;
-    } else if (where == down_) {
-        return Direction::DOWN;
-    } else if (where == left_) {
-        return Direction::LEFT;
-    } else if (where == right_) {
-        return Direction::RIGHT;
-    } else if (where == exit_) {
-        return Direction::EXIT;
-    } else {
-        return Direction::WRONG;
+    try {
+        return settings_.at(where);
+    } catch (const std::out_of_range& exception) {
+        return MoverResponse::WRONG;
     }
+}
+
+ConsoleMover::ConsoleMover() {
+    settings_["w"] = MoverResponse::UP;
+    settings_["s"] = MoverResponse::DOWN;
+    settings_["a"] = MoverResponse::LEFT;
+    settings_["d"] = MoverResponse::RIGHT;
+    settings_["console-logger"] = MoverResponse::CONSOLE_LOGGER;
+    settings_["file-logger"] = MoverResponse::FILE_LOGGER;
+    settings_["exit"] = MoverResponse::EXIT;
+    settings_["save"] = MoverResponse::SAVE;
+    settings_["load"] = MoverResponse::LOAD;
 }

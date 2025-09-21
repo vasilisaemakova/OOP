@@ -12,4 +12,6 @@ class FileLogger : public Logger {
     explicit FileLogger(const std::string& file_path);
 
     void log(ObserverLevel level, const std::string &update) override;
+
+    ~FileLogger() override = default;
 };

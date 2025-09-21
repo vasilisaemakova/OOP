@@ -5,7 +5,7 @@ bool Cell::isOnCell() const {
 }
 
 void Cell::setOnCell(bool onCell) {
-    Cell::onCell_ = onCell;
+    this->onCell_ = onCell;
 }
 
 bool Cell::isAvailable() const {
@@ -21,21 +21,60 @@ Cell::Cell() {
     onCell_ = false;
     available_ = true;
     event_ = nullptr;
-    key_ = false;
 }
 
-void Cell::setEvent(Event *event)
-{
+Cell::Cell(const Cell& other) :
+    onCell_(other.onCell_),
+    available_(other.available_) {
+    if (other.event_ != nullptr) {
+        event_ = other.event_->GetCopy();
+    } else {
+        event_ = nullptr;
+    }
+}
+
+Cell& Cell::operator=(Cell&& other) noexcept {
+    if (this == &other) {
+        return *this;
+    }
+    delete event_;
+
+    onCell_ = other.onCell_;
+    available_ = other.available_;
+    event_ = other.event_;
+    other.event_ = nullptr;
+
+    return *this;
+}
+
+Cell& Cell::operator=(const Cell& other) {
+    if (this == &other) {
+        return *this;
+    }
+    delete event_;
+
+    onCell_ = other.onCell_;
+    available_ = other.available_;
+    if (other.event_ != nullptr) {
+        event_ = other.event_->GetCopy();
+    } else {
+        event_ = nullptr;
+    }
+    return *this;
+}
+
+void Cell::setEvent(Event* event) {
     //event_ = nullptr;
     event_ = event;
 }
 
-
-Event *Cell::getEvent() const
-{
+Event* Cell::getEvent() const {
     return event_;
 }
 
 Cell::~Cell() {
     delete event_;
 }
+
+
+

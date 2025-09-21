@@ -10,6 +10,10 @@ void GameObserver::addLevel(ObserverLevel level) {
     levels_.push_back(level);
 }
 
+void GameObserver::removeAllLoggers() {
+    loggers_.clear();
+}
+
 void GameObserver::update(ObserverLevel level, const std::string& update) {
     // std::find(begin, end, value) ищет значение, и возвращает указатель на найденное значение
     // если значения нет, то возвращает указатель на конец
@@ -19,3 +23,9 @@ void GameObserver::update(ObserverLevel level, const std::string& update) {
         }
     }
 }
+GameObserver::~GameObserver() {
+    for (auto logger: loggers_) {
+        delete logger;
+    }
+}
+

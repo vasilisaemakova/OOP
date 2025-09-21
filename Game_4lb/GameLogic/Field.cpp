@@ -1,12 +1,10 @@
 #include "Field.h"
 #include "../Views/FieldView.h"
-Field::Field(size_t width, size_t height) : width_(width), height_(height)/*, cells(new Cell*[height])*/ {
+Field::Field(size_t width, size_t height) :
+    width_(width), height_(height)/*, cells(new Cell*[height])*/ {
     cells = new Cell* [height];
     for (int i = 0; i < height_; i++) {
-        cells[i] = new Cell[width_];
-        for (int j = 0; j < width_; j++) {
-            cells[i][j] = Cell();
-        }
+        cells[i] = new Cell[width_]{};
     }
 }
 
@@ -73,7 +71,6 @@ Field& Field::operator=(const Field& other) {
 }
 
 Field::Field(Field&& other) noexcept {
-
     cells = new Cell* [height_];
     for (int i = 0; i < height_; i++) {
         cells[i] = new Cell[width_];
@@ -89,8 +86,10 @@ Field::Field(Field&& other) noexcept {
 
 Field& Field::operator=(Field&& other) {
     if (this != &other) {
-        for (int i = 0; i < height_; i++) {
-            delete[] cells[i];
+        if (cells != nullptr) {
+            for (int i = 0; i < height_; i++) {
+                delete[] cells[i];
+            }
         }
         delete cells;
         height_ = other.height_;

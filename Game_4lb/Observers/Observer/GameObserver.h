@@ -12,5 +12,8 @@ class GameObserver : public Observer {
     void addLogger(Logger* logger) override;
     void addLevel(ObserverLevel level) override;
 
+    void removeAllLoggers() override;
+
     void update(ObserverLevel level, const std::string& update) override;
+    ~GameObserver() override;
 };
